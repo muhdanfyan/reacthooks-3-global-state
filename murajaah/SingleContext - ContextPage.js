@@ -2,27 +2,18 @@ import React, {createContext, useState} from "react";
 import "./App.css";
 
 // if No Provider, Consumer use default value
-const {Provider:LangProvider, Consumer:LangConsumer} = createContext ("en")
-const {Provider:ThemeProvider, Consumer:ThemeConsumer} = createContext ("en")
+const {Provider, Consumer} = createContext ("en")
 
 function LangPage() {
   const [lang, setLang] = useState("🇮🇩")
   const changeLang = e => setLang(e.target.value)
   const langState = {lang, changeLang}
-
-  const [theme, setTheme] = useState("🇮🇩")
-  const changeTheme = e => setTheme(e.target.value)
-  const themeState = {theme, changeTheme}
-
-
   return (
-      <LangProvider value={langState}>
-        <ThemeProvider value={themeState}>
-          <Header />
-          <Content />
-          <Footer />
-        </ThemeProvider>
-      </LangProvider>
+      <Provider value={langState}>
+        <Header />
+        <Content />
+        <Footer />
+      </Provider>
   );
 }
 
@@ -38,7 +29,7 @@ function Header() {
 function Menu() {
   console.log('menu render')
   return (
-    <LangConsumer>
+    <Consumer>
       {
         props => (
           <div>
@@ -56,7 +47,7 @@ function Menu() {
           </div>
         )
       }
-    </LangConsumer>
+    </Consumer>
   );
 }
 
@@ -73,7 +64,7 @@ function Content() {
 function Footer() {
   console.log("footer render")
   return (
-    <LangConsumer>
+    <Consumer>
       {
         props => (
           <>
@@ -82,7 +73,7 @@ function Footer() {
           </>
         )
       }
-    </LangConsumer>
+    </Consumer>
   );
 }
 
