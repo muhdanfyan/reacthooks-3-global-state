@@ -1,20 +1,27 @@
 import React, {createContext, useState, useContext} from "react";
-import AppContext from "./AppContext";
 import "./App.css";
 
 // if No Provider, Consumer use default value
-const {LangContext, 
-  LangProvider, 
-  ThemeContext, 
-  ThemeProvider} = AppContext
+const LangContext = createContext()
+const {Provider:LangProvider, Consumer:LangConsumer} = LangContext
+const ThemeContext = createContext()
+const {Provider:ThemeProvider, Consumer:ThemeConsumer} = ThemeContext
+
 
 
 function LangPage() {
+  const [lang, setLang] = useState("🇮🇩")
+  const changeLang = e => setLang(e.target.value)
+  const langState = {lang, changeLang}
+
+  const [theme, setTheme] = useState("light")
+  const changeTheme = e => setTheme(e.target.value)
+  const themeState = {theme, changeTheme}
 
 
   return (
-      <LangProvider>
-        <ThemeProvider>
+      <LangProvider value={langState}>
+        <ThemeProvider value={themeState}>
           <Header />
           <Content />
           <Footer />
